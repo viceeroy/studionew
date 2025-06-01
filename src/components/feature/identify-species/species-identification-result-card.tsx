@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import type { IdentifySpeciesOutput } from '@/ai/flows/identify-species';
 import { Badge } from '@/components/ui/badge';
 import { ShareButtons } from '@/components/shared/share-buttons';
-import { ArrowRight, BookOpen, MapPin, Drumstick, Users, ShieldAlert, Leaf, Lightbulb, Globe } from 'lucide-react';
+import { ArrowRight, BookOpen, MapPin, Drumstick, Users, ShieldAlert, Leaf, Lightbulb, Globe, Search } from 'lucide-react';
 
 interface SpeciesIdentificationResultCardProps {
   result: IdentifySpeciesOutput;
@@ -28,6 +28,7 @@ export function SpeciesIdentificationResultCard({ result, originalPhotoUrl }: Sp
   
   const shareUrl = typeof window !== 'undefined' ? `${window.location.origin}/species/${encodeURIComponent(identification.latinName)}` : '';
   const shareText = `I identified a ${identification.commonName} using Semurg! Check it out:`;
+  const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(identification.commonName + " " + identification.latinName)}`;
 
 
   return (
@@ -88,11 +89,11 @@ export function SpeciesIdentificationResultCard({ result, originalPhotoUrl }: Sp
       </CardContent>
       <CardFooter className="p-6 bg-muted/30 flex flex-col sm:flex-row justify-between items-center gap-4">
         <ShareButtons url={shareUrl} title={shareText} />
-        <Link href={`/species/${encodeURIComponent(identification.latinName)}`} passHref>
-          <Button>
-            Learn More <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
-        </Link>
+        <Button asChild>
+            <a href={googleSearchUrl} target="_blank" rel="noopener noreferrer">
+                Search Online <Search className="ml-2 h-4 w-4" />
+            </a>
+        </Button>
       </CardFooter>
     </Card>
   );
