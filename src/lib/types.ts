@@ -22,16 +22,16 @@ export type SpeciesIdentificationResult = IdentifySpeciesOutput;
 export interface SpeciesSummary {
   commonName: string;
   latinName: string;
-  photoUrl?: string; 
+  photoUrl?: string;
 }
 
 export interface UserSummary {
   id: string;
-  username: string; 
-  name: string; 
+  username: string;
+  name: string;
   avatarUrl?: string;
   bio?: string;
-  website?: string; 
+  website?: string;
 }
 
 export interface Location {
@@ -42,22 +42,24 @@ export interface Location {
 
 export interface Observation {
   id: string;
-  user: UserSummary; 
-  species?: SpeciesSummary; 
-  identifiedSpeciesDetails?: SpeciesIdentificationResult; 
-  photoUrl: string; 
-  photoDataUri?: string; 
+  user: UserSummary;
+  species?: SpeciesSummary;
+  identifiedSpeciesDetails?: SpeciesIdentificationResult;
+  photoUrl: string;
+  photoDataUri?: string;
   location?: Location;
   biome?: string;
-  timestamp: string; 
+  timestamp: string;
   notes?: string;
+  likesCount: number;
+  commentsCount: number;
 }
 
 export interface SimilarSpeciesSuggestion {
   name: string;
   latinName: string;
   description: string;
-  image: string; 
+  image: string;
 }
 
 export interface DisplayableSpeciesDetails extends IdentifySpeciesOutput {

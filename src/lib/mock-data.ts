@@ -60,6 +60,8 @@ export let mockObservations: Observation[] = [
     biome: 'Temperate Grassland',
     timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2).toISOString(),
     notes: 'Spotted this beautiful Monarch during a hike.',
+    likesCount: 125,
+    commentsCount: 12,
   },
   {
     id: 'obs2',
@@ -85,6 +87,8 @@ export let mockObservations: Observation[] = [
     biome: 'Temperate Deciduous Forest',
     timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24 * 5).toISOString(),
     notes: 'Majestic old Oak tree in Central Park.',
+    likesCount: 240,
+    commentsCount: 35,
   },
   {
     id: 'obs3',
@@ -110,6 +114,8 @@ export let mockObservations: Observation[] = [
     biome: 'Urban Woodland',
     timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24 * 10).toISOString(),
     notes: 'A fleeting glimpse of a Red Fox in a London park.',
+    likesCount: 88,
+    commentsCount: 7,
   },
     {
     id: 'obs4',
@@ -135,6 +141,8 @@ export let mockObservations: Observation[] = [
     biome: 'Cultivated Field',
     timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24 * 1).toISOString(),
     notes: 'Bright sunflowers in a field.',
+    likesCount: 312,
+    commentsCount: 22,
   },
   {
     id: 'obs5',
@@ -160,6 +168,8 @@ export let mockObservations: Observation[] = [
     biome: 'Garden',
     timestamp: new Date(Date.now() - 1000 * 60 * 60 * 3).toISOString(),
     notes: 'A friendly robin visited my garden.',
+    likesCount: 175,
+    commentsCount: 19,
   },
 ];
 
@@ -178,6 +188,8 @@ export const mockSpeciesDetail: DisplayableSpeciesDetails = {
   ecologicalNiche: 'Pollinator of various flowering plants. Larvae are herbivores, specialized on milkweed. Serves as a food source for birds, insects, and spiders. Their toxicity from milkweed provides defense against some predators.',
   interestingFact: 'Monarch butterflies undertake a remarkable multi-generational migration of up to 3,000 miles, with the fourth generation living much longer to make the return journey south.',
   geographicDistribution: 'Primarily North America (Canada, USA, Mexico), but also found in Central America, northern South America, Australia, New Zealand, and some Pacific islands where milkweed has been introduced.',
+  likesCount: 0, // Added for type consistency, but not primarily used here
+  commentsCount: 0, // Added for type consistency
 };
 
 export const mockSimilarSpecies: SimilarSpeciesSuggestion[] = [
@@ -202,7 +214,14 @@ export function getObservationById(id: string): Observation | undefined {
 export function getSpeciesByLatinName(latinName: string): DisplayableSpeciesDetails | undefined {
   const obs = mockObservations.find(o => o.identifiedSpeciesDetails?.identification.latinName === latinName);
   if (obs && obs.identifiedSpeciesDetails) return obs.identifiedSpeciesDetails;
-  if (latinName === mockSpeciesDetail.identification.latinName) return mockSpeciesDetail;
+  // Ensure mockSpeciesDetail also has the new count fields if it's returned
+  if (latinName === mockSpeciesDetail.identification.latinName) {
+      return {
+        ...mockSpeciesDetail,
+        likesCount: mockSpeciesDetail.likesCount || 0,
+        commentsCount: mockSpeciesDetail.commentsCount || 0,
+      };
+  }
   return undefined;
 }
 
@@ -229,8 +248,8 @@ export function addObservation(data: {
     biome: data.biome || 'Mixed Habitat', // Default biome
     timestamp: new Date().toISOString(),
     notes: data.notes || `Observation of ${data.identifiedSpeciesDetails.identification.commonName}.`,
+    likesCount: 0, // New observations start with 0 likes
+    commentsCount: 0, // New observations start with 0 comments
   };
   mockObservations.unshift(newObservation); // Add to the beginning of the array
 }
-
-    
