@@ -29,7 +29,7 @@ export function Header() {
   
   if (!mounted) {
     return (
-      <header className="sticky top-0 z-40 flex h-16 items-center justify-between border-b px-4 md:px-6">
+      <header className="sticky top-0 z-40 flex h-16 items-center justify-between border-b border-border px-4 md:px-6">
         {/* Placeholder for left content (e.g. mobile logo handled by AppShell) */}
         <div className="flex items-center gap-2">
            {/* Mobile logo is handled by AppShell, this can be empty on desktop */}
@@ -61,11 +61,11 @@ export function Header() {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "flex items-center gap-x-2 rounded-md px-3 py-2 text-base font-medium transition-colors hover:bg-accent/80 hover:text-accent-foreground",
+                  "flex items-center gap-x-1.5 rounded-md px-2.5 py-1.5 text-sm font-medium transition-colors hover:bg-accent/80 hover:text-accent-foreground",
                   isActive ? "bg-accent text-accent-foreground" : "text-muted-foreground hover:text-foreground"
                 )}
               >
-                <link.icon className={cn("h-5 w-5", isActive ? "text-accent-foreground" : "")} />
+                <link.icon className={cn("h-4 w-4", isActive ? "text-accent-foreground" : "")} />
                 <span>{link.label}</span>
               </Link>
             );
