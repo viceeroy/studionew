@@ -27,7 +27,7 @@ export default function ProfilePage() {
       <Separator className="my-4 md:my-6" />
 
       <Tabs defaultValue="posts" className="w-full">
-        <TabsList className="grid w-full grid-cols-3 max-w-sm mx-auto bg-transparent p-0 border-b rounded-none">
+        <TabsList className="grid w-full grid-cols-3 bg-transparent p-0 border-b rounded-none">
           <TabsTrigger value="posts" className="pb-3 data-[state=active]:shadow-none data-[state=active]:border-b-2 data-[state=active]:border-foreground rounded-none">
             <Grid className="mr-2 h-4 w-4 text-muted-foreground data-[state=active]:text-foreground" />
             <span className="text-xs uppercase tracking-wider text-muted-foreground data-[state=active]:text-foreground">Posts</span>
