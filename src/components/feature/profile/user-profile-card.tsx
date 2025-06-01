@@ -7,7 +7,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import type { UserSummary } from '@/lib/types';
 import { Settings, Plus, Link as LinkIcon } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
+// import { useToast } from '@/hooks/use-toast'; // No longer needed for edit button
 
 interface UserProfileCardProps {
   user: UserSummary;
@@ -17,14 +17,14 @@ interface UserProfileCardProps {
 }
 
 export function UserProfileCard({ user, observationsCount, followersCount, followingCount }: UserProfileCardProps) {
-  const { toast } = useToast();
+  // const { toast } = useToast(); // No longer needed for edit button
 
-  const handleEditProfileClick = () => {
-    toast({
-      title: "Coming Soon!",
-      description: "Profile editing functionality will be available in a future update.",
-    });
-  };
+  // const handleEditProfileClick = () => {
+  //   toast({
+  //     title: "Coming Soon!",
+  //     description: "Profile editing functionality will be available in a future update.",
+  //   });
+  // };
 
   return (
     <Card className="shadow-none border-none bg-transparent">
@@ -50,7 +50,9 @@ export function UserProfileCard({ user, observationsCount, followersCount, follo
             <div className="flex flex-col sm:flex-row sm:items-center gap-4 justify-between">
               <h1 className="text-xl md:text-2xl font-light text-foreground">{user.username}</h1>
               <div className="flex gap-2 items-center">
-                <Button variant="secondary" size="sm" className="text-xs px-3 py-1 h-auto" onClick={handleEditProfileClick}>Edit Profile</Button>
+                <Button variant="secondary" size="sm" className="text-xs px-3 py-1 h-auto" asChild>
+                  <Link href="/profile/edit">Edit Profile</Link>
+                </Button>
                 <Button variant="secondary" size="sm" className="text-xs px-3 py-1 h-auto">View Archive</Button>
                 <Button variant="ghost" size="icon" className="h-7 w-7">
                   <Settings className="h-5 w-5 text-foreground" />
