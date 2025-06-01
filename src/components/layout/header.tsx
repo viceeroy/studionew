@@ -17,7 +17,6 @@ export function Header() {
 
   useEffect(() => {
     setMounted(true);
-    // Check initial theme, assuming 'dark' class is on <html>
     const currentTheme = document.documentElement.classList.contains('dark');
     setIsDarkMode(currentTheme);
   }, []);
@@ -27,15 +26,13 @@ export function Header() {
     setIsDarkMode(!isDarkMode);
   };
   
+  // Simplified placeholder for SSR
   if (!mounted) {
     return (
-      <header className="sticky top-0 z-40 flex h-16 items-center justify-between border-b border-border px-4 md:px-6">
-        {/* Placeholder for left content (e.g. mobile logo handled by AppShell) */}
-        <div className="flex items-center gap-2">
-           {/* Mobile logo is handled by AppShell, this can be empty on desktop */}
-        </div>
+      <header className="sticky top-0 z-40 flex h-16 items-center justify-between border-b border-border px-4 md:px-6 w-full">
+        <div className="h-8 w-20 rounded-md bg-muted animate-pulse" /> {/* Placeholder for Logo */}
         <div className="flex items-center gap-4">
-          <div className="hidden md:flex h-10 w-48 rounded-md bg-muted animate-pulse" /> {/* Placeholder for nav links */}
+          <div className="hidden md:flex h-8 w-48 rounded-md bg-muted animate-pulse" /> {/* Placeholder for nav links */}
           <div className="h-8 w-8 rounded-full bg-muted animate-pulse" /> {/* Placeholder for theme button */}
         </div>
       </header>
@@ -43,17 +40,15 @@ export function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-40 flex h-16 items-center justify-between border-b border-border px-4 md:px-6">
-      {/* Left side: This div helps push the right content group.
-          Mobile logo is handled by AppShell's separate fixed div.
-      */}
+    <header className="sticky top-0 z-40 flex h-16 items-center justify-between border-b border-border px-4 md:px-6 w-full bg-background">
+      {/* Left side: Logo */}
       <div className="flex items-center">
-        {/* Intentionally sparse on desktop to allow right-alignment of nav */}
+        <Logo size="sm" />
       </div>
 
-      {/* Right side: Desktop Navigation Links & Theme Toggle */}
-      <div className="hidden md:flex items-center gap-x-2 lg:gap-x-4">
-        <nav className="flex items-center gap-x-1 lg:gap-x-2">
+      {/* Right side: Desktop Navigation Links & Theme Toggle for all screens */}
+      <div className="flex items-center gap-x-2 lg:gap-x-4">
+        <nav className="hidden md:flex items-center gap-x-1 lg:gap-x-2">
           {navLinks.map((link: NavLink) => {
             const isActive = pathname === link.href || (link.href !== '/discover' && pathname.startsWith(link.href));
             return (
