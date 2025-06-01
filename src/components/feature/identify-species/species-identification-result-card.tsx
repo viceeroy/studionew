@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import type { IdentifySpeciesOutput } from '@/ai/flows/identify-species';
 import { Badge } from '@/components/ui/badge';
 import { ShareButtons } from '@/components/shared/share-buttons';
-import { ArrowRight, BookOpen, MapPin, Drumstick, Users, ShieldAlert, Leaf } from 'lucide-react';
+import { ArrowRight, BookOpen, MapPin, Drumstick, Users, ShieldAlert, Leaf, Lightbulb, Globe } from 'lucide-react';
 
 interface SpeciesIdentificationResultCardProps {
   result: IdentifySpeciesOutput;
@@ -13,12 +13,14 @@ interface SpeciesIdentificationResultCardProps {
 }
 
 export function SpeciesIdentificationResultCard({ result, originalPhotoUrl }: SpeciesIdentificationResultCardProps) {
-  const { identification, habitat, diet, similarSpecies, endangeredStatus, ecologicalNiche } = result;
+  const { identification, habitat, diet, similarSpecies, endangeredStatus, ecologicalNiche, interestingFact, geographicDistribution } = result;
 
   const detailItems = [
     { icon: MapPin, label: 'Habitat', value: habitat },
     { icon: Drumstick, label: 'Diet', value: diet },
     { icon: Leaf, label: 'Ecological Niche', value: ecologicalNiche },
+    { icon: Globe, label: 'Geographic Distribution', value: geographicDistribution },
+    { icon: Lightbulb, label: 'Interesting Fact', value: interestingFact },
     ...(endangeredStatus && endangeredStatus.toLowerCase() !== 'least concern' && endangeredStatus.toLowerCase() !== 'n/a' && endangeredStatus.toLowerCase() !== 'not applicable' && endangeredStatus.toLowerCase() !== 'unknown'
       ? [{ icon: ShieldAlert, label: 'Endangered Status', value: endangeredStatus, isBadge: true, variant: 'destructive' as const }]
       : []),

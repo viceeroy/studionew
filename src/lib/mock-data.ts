@@ -1,4 +1,4 @@
-import type { Observation, UserSummary, SpeciesSummary, Location, DisplayableSpeciesDetails, SimilarSpeciesSuggestion } from './types'; // Removed MapObservation
+import type { Observation, UserSummary, SpeciesSummary, Location, DisplayableSpeciesDetails, SimilarSpeciesSuggestion } from './types';
 
 export const mockUser: UserSummary = {
   id: 'user123',
@@ -51,6 +51,8 @@ export const mockObservations: Observation[] = [
       similarSpecies: ['Viceroy Butterfly', 'Queen Butterfly'],
       endangeredStatus: 'Endangered (IUCN Red List, specific populations)',
       ecologicalNiche: 'Pollinator, herbivore (larvae), important food source for some predators.',
+      interestingFact: 'Monarch butterflies undertake a remarkable multi-generational migration of up to 3,000 miles.',
+      geographicDistribution: 'North America, Central America, and northern South America. Also found in Australia, New Zealand, and some Pacific islands.',
     },
     photoUrl: 'https://placehold.co/600x400.png?id=obs1',
     location: commonLocations[0],
@@ -74,6 +76,8 @@ export const mockObservations: Observation[] = [
       similarSpecies: ['White Oak', 'Sessile Oak'],
       endangeredStatus: 'Least Concern',
       ecologicalNiche: 'Provides habitat and food for numerous species, soil stabilization, carbon sequestration.',
+      interestingFact: 'Oak trees can live for hundreds of years, with some specimens known to be over a thousand years old.',
+      geographicDistribution: 'Native to most of Europe, and Anatolia to the Caucasus, as well as parts of North Africa.',
     },
     photoUrl: 'https://placehold.co/600x400.png?id=obs2',
     location: commonLocations[1],
@@ -97,6 +101,8 @@ export const mockObservations: Observation[] = [
       similarSpecies: ['Arctic Fox', 'Gray Fox'],
       endangeredStatus: 'Least Concern',
       ecologicalNiche: 'Predator, helps control rodent populations, seed disperser.',
+      interestingFact: 'Red foxes have excellent hearing and can reportedly hear a watch ticking from 40 yards away.',
+      geographicDistribution: 'Found across the entire Northern Hemisphere including North America, Europe, Asia, and parts of North Africa.',
     },
     photoUrl: 'https://placehold.co/600x400.png?id=obs3',
     location: commonLocations[2],
@@ -108,6 +114,21 @@ export const mockObservations: Observation[] = [
     id: 'obs4',
     user: { id: 'user789', username: 'BotanistBen', name: 'Botanist Ben', avatarUrl: 'https://placehold.co/100x100.png?u=3' },
     species: sampleSpecies[3],
+     identifiedSpeciesDetails: {
+      identification: {
+        commonName: sampleSpecies[3].commonName,
+        latinName: sampleSpecies[3].latinName,
+        genus: 'Helianthus',
+        species: 'annuus',
+      },
+      habitat: 'Open, sunny areas with well-drained soil. Often cultivated.',
+      diet: 'Photosynthesis. Seeds are consumed by birds and mammals.',
+      similarSpecies: ['Jerusalem Artichoke', 'Maximilian Sunflower'],
+      endangeredStatus: 'Least Concern (wild populations)',
+      ecologicalNiche: 'Provides food (seeds, nectar) for wildlife, attracts pollinators.',
+      interestingFact: 'Young sunflowers exhibit heliotropism, where the flower heads turn to follow the sun across the sky.',
+      geographicDistribution: 'Native to North America, now cultivated worldwide.',
+    },
     photoUrl: 'https://placehold.co/600x400.png?id=obs4',
     location: commonLocations[3],
     biome: 'Cultivated Field',
@@ -118,6 +139,21 @@ export const mockObservations: Observation[] = [
     id: 'obs5',
     user: mockUser,
     species: sampleSpecies[4],
+     identifiedSpeciesDetails: {
+      identification: {
+        commonName: sampleSpecies[4].commonName,
+        latinName: sampleSpecies[4].latinName,
+        genus: 'Erithacus',
+        species: 'rubecula',
+      },
+      habitat: 'Woodlands, parks, gardens, and hedgerows.',
+      diet: 'Insects, spiders, worms, seeds, and berries.',
+      similarSpecies: ['Nightingale', 'Black Redstart (female)'],
+      endangeredStatus: 'Least Concern',
+      ecologicalNiche: 'Insectivore, contributes to seed dispersal, common garden bird.',
+      interestingFact: 'European Robins are highly territorial and will aggressively defend their territory, sometimes even attacking their own reflection.',
+      geographicDistribution: 'Native to Europe, parts of North Africa, and Western Asia.',
+    },
     photoUrl: 'https://placehold.co/600x400.png?id=obs5',
     location: commonLocations[4],
     biome: 'Garden',
@@ -126,16 +162,6 @@ export const mockObservations: Observation[] = [
   },
 ];
 
-// Removed mockMapObservations as it's no longer needed
-// export const mockMapObservations: MapObservation[] = mockObservations
-//   .filter(obs => obs.location && obs.species)
-//   .map(obs => ({
-//     id: obs.id,
-//     lat: obs.location!.lat,
-//     lng: obs.location!.lng,
-//     title: obs.species!.commonName,
-//     photoUrl: obs.photoUrl,
-//   }));
 
 export const mockSpeciesDetail: DisplayableSpeciesDetails = {
   identification: {
@@ -149,6 +175,8 @@ export const mockSpeciesDetail: DisplayableSpeciesDetails = {
   similarSpecies: ['Viceroy Butterfly (Limenitis archippus)', 'Queen Butterfly (Danaus gilippus)', 'Soldier Butterfly (Danaus eresimus)'],
   endangeredStatus: 'Endangered (IUCN Red List, North American migratory populations). Threats include habitat loss (especially milkweed), pesticide use, and climate change.',
   ecologicalNiche: 'Pollinator of various flowering plants. Larvae are herbivores, specialized on milkweed. Serves as a food source for birds, insects, and spiders. Their toxicity from milkweed provides defense against some predators.',
+  interestingFact: 'Monarch butterflies undertake a remarkable multi-generational migration of up to 3,000 miles, with the fourth generation living much longer to make the return journey south.',
+  geographicDistribution: 'Primarily North America (Canada, USA, Mexico), but also found in Central America, northern South America, Australia, New Zealand, and some Pacific islands where milkweed has been introduced.',
 };
 
 export const mockSimilarSpecies: SimilarSpeciesSuggestion[] = [

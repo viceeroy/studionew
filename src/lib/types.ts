@@ -1,4 +1,21 @@
-import type { IdentifySpeciesOutput } from '@/ai/flows/identify-species';
+import type { IdentifySpeciesOutput as GenkitIdentifySpeciesOutput } from '@/ai/flows/identify-species';
+
+// Explicitly define IdentifySpeciesOutput to ensure new fields are part of the type
+export interface IdentifySpeciesOutput extends GenkitIdentifySpeciesOutput {
+  identification: {
+    commonName: string;
+    latinName: string;
+    genus: string;
+    species: string;
+  };
+  habitat: string;
+  diet: string;
+  similarSpecies: string[];
+  endangeredStatus: string;
+  ecologicalNiche: string;
+  interestingFact: string;
+  geographicDistribution: string;
+}
 
 export type SpeciesIdentificationResult = IdentifySpeciesOutput;
 
@@ -35,15 +52,6 @@ export interface Observation {
   timestamp: string; 
   notes?: string;
 }
-
-// Removed MapObservation type as it's no longer needed
-// export interface MapObservation {
-//   id: string;
-//   lat: number;
-//   lng: number;
-//   title: string; 
-//   photoUrl: string;
-// }
 
 export interface SimilarSpeciesSuggestion {
   name: string;

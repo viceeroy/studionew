@@ -28,6 +28,8 @@ const SpeciesDetailsOutputSchema = z.object({
     .string()
     .describe('The role of the species within its ecological niche.'),
   similarSpecies: z.array(z.string()).describe('List of species similar to the identified species'),
+  interestingFact: z.string().describe('An interesting fact about the species.'),
+  geographicDistribution: z.string().describe('The primary geographic distribution or country/countries of origin of the species.'),
 });
 export type SpeciesDetailsOutput = z.infer<typeof SpeciesDetailsOutputSchema>;
 
@@ -49,6 +51,8 @@ const prompt = ai.definePrompt({
   - Conservation Status
   - Ecological Role
   - Similar Species
+  - An interesting fact
+  - Geographic Distribution (Countries of origin or primary regions)
 
   Ensure the information is accurate and comprehensive, and respond using the output schema.`,
 });

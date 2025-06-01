@@ -4,7 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import type { DisplayableSpeciesDetails, SimilarSpeciesSuggestion } from '@/lib/types';
 import { ShareButtons } from '@/components/shared/share-buttons';
-import { MapPin, Drumstick, Users, ShieldAlert, Leaf, Brain, Trees } from 'lucide-react';
+import { MapPin, Drumstick, Users, ShieldAlert, Leaf, Brain, Trees, Lightbulb, Globe } from 'lucide-react';
 import Link from 'next/link';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
@@ -15,12 +15,14 @@ interface SpeciesDetailViewProps {
 }
 
 export function SpeciesDetailView({ species, similarSpeciesSuggestions, originalPhotoUrl }: SpeciesDetailViewProps) {
-  const { identification, habitat, diet, similarSpecies, endangeredStatus, ecologicalNiche } = species;
+  const { identification, habitat, diet, similarSpecies, endangeredStatus, ecologicalNiche, interestingFact, geographicDistribution } = species;
 
   const detailItems = [
     { icon: MapPin, label: 'Habitat', value: habitat },
     { icon: Drumstick, label: 'Diet', value: diet },
     { icon: Leaf, label: 'Ecological Niche', value: ecologicalNiche },
+    { icon: Globe, label: 'Geographic Distribution', value: geographicDistribution },
+    { icon: Lightbulb, label: 'Interesting Fact', value: interestingFact },
     ...(endangeredStatus && endangeredStatus.toLowerCase() !== 'least concern' && endangeredStatus.toLowerCase() !== 'n/a' && endangeredStatus.toLowerCase() !== 'not applicable' && endangeredStatus.toLowerCase() !== 'unknown'
       ? [{ icon: ShieldAlert, label: 'Endangered Status', value: endangeredStatus, isBadge: true, variant: 'destructive' as const }]
       : [{ icon: ShieldAlert, label: 'Endangered Status', value: endangeredStatus || 'Unknown', isBadge: true, variant: 'secondary' as const }]),
@@ -97,8 +99,9 @@ export function SpeciesDetailView({ species, similarSpeciesSuggestions, original
                 <CardContent>
                     <p className="text-sm text-muted-foreground">
                         The {identification.commonName} ({identification.latinName}), belonging to the genus {identification.genus},
-                        is typically found in {habitat || 'various habitats'}. Its diet consists mainly of {diet || 'various food sources'}.
+                        is typically found in {habitat || 'various habitats'} and its range includes {geographicDistribution || 'various regions'}. Its diet consists mainly of {diet || 'various food sources'}.
                         This species plays a role as {ecologicalNiche || 'part of its ecosystem'}.
+                        An interesting fact: {interestingFact || 'It has unique characteristics.'}
                         {endangeredStatus && endangeredStatus !== "Least Concern" ? ` It is currently listed as ${endangeredStatus}.` : ""}
                     </p>
                 </CardContent>

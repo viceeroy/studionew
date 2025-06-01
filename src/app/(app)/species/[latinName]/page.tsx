@@ -5,7 +5,8 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Home } from 'lucide-react';
-import { getSpeciesByLatinName, mockSimilarSpecies } from '@/lib/mock-data'; // Using mock data for base and AI for enhancement
+import { getSpeciesByLatinName, mockObservations } from '@/lib/mock-data'; // Using mock data for base and AI for enhancement
+import type { DisplayableSpeciesDetails } from '@/lib/types';
 
 export const revalidate = 3600; // Revalidate page every hour
 
@@ -16,32 +17,23 @@ interface SpeciesPageProps {
 }
 
 // Helper to transform SpeciesDetailsOutput to DisplayableSpeciesDetails
-function transformSpeciesDetails(details: SpeciesDetailsOutput, latinName: string): import('@/lib/types').DisplayableSpeciesDetails {
-  // Assuming commonName might need to be derived or is part of what user expects
-  // For now, we are using latinName from URL to fetch. If commonName is available, use it.
-  // The SpeciesDetailsOutput from AI doesn't give commonName directly, it's based on input commonName.
-  // We need a way to get the common name if we only have latinName.
-  // Let's assume for now the input `speciesName` to `getSpeciesDetails` was the common name.
-  // This might be a limitation if we only navigate by latin name.
-
-  // A practical approach: If latinName is the primary ID, we might need a lookup for commonName
-  // or the AI flow should return it based on latinName too.
-  // For mock, we can try to find it.
+function transformSpeciesDetails(details: SpeciesDetailsOutput, latinName: string): DisplayableSpeciesDetails {
   const commonNameFromLatin = latinName.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-
 
   return {
     identification: {
-      commonName: commonNameFromLatin, // This is an assumption, better if AI returns it
+      commonName: commonNameFromLatin, 
       latinName: latinName,
       genus: details.genus,
       species: details.species,
     },
     habitat: details.habitat,
     diet: details.diet,
-    similarSpecies: details.similarSpecies, // This is from getSpeciesDetails
+    similarSpecies: details.similarSpecies,
     endangeredStatus: details.conservationStatus,
     ecologicalNiche: details.ecologicalRole,
+    interestingFact: details.interestingFact,
+    geographicDistribution: details.geographicDistribution,
   };
 }
 
@@ -49,17 +41,14 @@ function transformSpeciesDetails(details: SpeciesDetailsOutput, latinName: strin
 export default async function SpeciesPage({ params }: SpeciesPageProps) {
   const decodedLatinName = decodeURIComponent(params.latinName);
 
-  let speciesDetails: import('@/lib/types').DisplayableSpeciesDetails | null = null;
+  let speciesDetails: DisplayableSpeciesDetails | null = null;
   let similarSpeciesSuggestions: SuggestSimilarSpeciesOutput['similarSpecies'] | null = null;
   let error: string | null = null;
   let originalPhotoUrl: string | undefined = undefined;
 
-  // Try to get base details from mock data first (which might include an original photo)
   const mockDetail = getSpeciesByLatinName(decodedLatinName);
   if (mockDetail) {
     speciesDetails = mockDetail;
-    // Attempt to find an observation to get its photo.
-    // This is a bit contrived; in a real app, the species entry would have a canonical image.
     const linkedObservation = mockObservations.find(obs => obs.identifiedSpeciesDetails?.identification.latinName === decodedLatinName);
     if (linkedObservation) {
         originalPhotoUrl = linkedObservation.photoUrl;
@@ -67,28 +56,27 @@ export default async function SpeciesPage({ params }: SpeciesPageProps) {
   }
 
   try {
-    // Enhance with AI data if not fully populated or to get latest
     const aiSpeciesDetails = await getSpeciesDetails({ speciesName: speciesDetails?.identification.commonName || decodedLatinName });
     if (aiSpeciesDetails) {
         const transformedDetails = transformSpeciesDetails(aiSpeciesDetails, decodedLatinName);
-        // Merge AI details with mock/base details, AI taking precedence for text fields
         speciesDetails = {
-            ...(speciesDetails || {}), // keep existing fields like commonName if mock had a better one
-            ...transformedDetails, // AI data overwrites fields it provides
+            ...(speciesDetails || {} as DisplayableSpeciesDetails), 
+            ...transformedDetails, 
             identification: {
                 ...(speciesDetails?.identification || {}),
                 ...transformedDetails.identification,
-            }
+            },
+             // Ensure new fields are explicitly carried over or defaulted if not in transformedDetails for some reason
+            interestingFact: transformedDetails.interestingFact || speciesDetails?.interestingFact || '',
+            geographicDistribution: transformedDetails.geographicDistribution || speciesDetails?.geographicDistribution || '',
         };
     }
     
     if (speciesDetails) {
-      // Use a placeholder image for similar species suggestion if originalPhotoUrl is not available
-      const photoForAISuggestion = originalPhotoUrl || 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='; // 1x1 transparent png
+      const photoForAISuggestion = originalPhotoUrl || 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
       
       const suggestionsResult = await suggestSimilarSpecies({
         speciesName: speciesDetails.identification.commonName,
-        // Combine habitat and diet for a richer description
         speciesDescription: `Habitat: ${speciesDetails.habitat}. Diet: ${speciesDetails.diet}. Ecological Niche: ${speciesDetails.ecologicalNiche}.`,
         speciesImage: photoForAISuggestion 
       });
@@ -98,16 +86,14 @@ export default async function SpeciesPage({ params }: SpeciesPageProps) {
   } catch (e) {
     console.error('Error fetching species data:', e);
     error = e instanceof Error ? e.message : 'Failed to load species information.';
-    // If AI fails but we have mock data, we can still show that
     if (!speciesDetails) {
-        // If AI failed AND no mock data, then it's a full error.
+        // Full error if no mock data either
     } else {
-        error = `Could not fetch full AI details, showing available data. Error: ${error}`; // Partial error
+        error = `Could not fetch full AI details, showing available data. Error: ${error}`; 
     }
   }
 
   if (!speciesDetails && error) {
-    // If AI fails and no mock data was found
     return (
       <div className="container mx-auto py-8 px-4 text-center">
         <Alert variant="destructive" className="max-w-md mx-auto">
@@ -135,11 +121,10 @@ export default async function SpeciesPage({ params }: SpeciesPageProps) {
     );
   }
 
-
   return (
     <div>
-      {error && !speciesDetails && ( /* Show error only if no details at all */
-         <Alert variant="destructive" className="mb-4">
+      {error && !similarSpeciesSuggestions && ( /* Show error if AI enhancements failed but base details exist */
+         <Alert variant="destructive" className="mb-4 mx-auto max-w-4xl">
           <AlertTitle>Partial Data Error</AlertTitle>
           <AlertDescription>{error}</AlertDescription>
         </Alert>
@@ -152,10 +137,3 @@ export default async function SpeciesPage({ params }: SpeciesPageProps) {
     </div>
   );
 }
-
-// For mock data, if speciesDetails from AI does not return similarSpecies (plural),
-// but SpeciesDetailView expects it, mockSimilarSpecies (plural) is not used currently in the logic path.
-// The AI flow 'species-details.ts' (getSpeciesDetails) returns `similarSpecies: z.array(z.string())`.
-// The AI flow 'suggest-similar-species.ts' (suggestSimilarSpecies) returns rich objects for similar species.
-// I've used the latter for `similarSpeciesSuggestions` and the former is part of `speciesDetails.similarSpecies`.
-// The UI component `SpeciesDetailView` distinguishes these.

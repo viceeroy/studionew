@@ -32,6 +32,8 @@ const IdentifySpeciesOutputSchema = z.object({
   similarSpecies: z.array(z.string()).describe('A list of similar species.'),
   endangeredStatus: z.string().describe('The endangered status of the identified species, if any.'),
   ecologicalNiche: z.string().describe('The role of the species within its immediate ecological niche.'),
+  interestingFact: z.string().describe('An interesting fact about the identified species.'),
+  geographicDistribution: z.string().describe('The primary geographic distribution or country/countries of origin of the species.'),
 });
 export type IdentifySpeciesOutput = z.infer<typeof IdentifySpeciesOutputSchema>;
 
@@ -45,7 +47,7 @@ const identifySpeciesPrompt = ai.definePrompt({
   output: {schema: IdentifySpeciesOutputSchema},
   prompt: `You are an expert in identifying plant and animal species.
 
-You will use the provided photo to identify the species, and provide information about its habitat, diet, similar species, endangered status (if any), and its role within its immediate ecological niche.
+You will use the provided photo to identify the species, and provide information about its habitat, diet, similar species, endangered status (if any), its role within its immediate ecological niche, an interesting fact about it, and its primary geographic distribution or country of origin.
 
 Analyze the following photo to identify the species:
 
