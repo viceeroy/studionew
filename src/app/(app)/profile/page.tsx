@@ -1,3 +1,4 @@
+
 import { UserProfileCard } from '@/components/feature/profile/user-profile-card';
 import { UserObservationGallery } from '@/components/feature/profile/user-observation-gallery';
 import { mockUser, mockObservations } from '@/lib/mock-data';
@@ -12,8 +13,8 @@ export default function ProfilePage() {
   const observationsCount = userObservations.length;
   
   // Mock data for followers and following, as in the reference image
-  const followersCount = 1003;
-  const followingCount = 397;
+  const followersCount = 0; // Set to 0
+  const followingCount = 0; // Set to 0
 
   return (
     <div className="space-y-6 max-w-5xl mx-auto px-2 sm:px-4">

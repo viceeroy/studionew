@@ -1,13 +1,13 @@
 
 import type { Observation, UserSummary, SpeciesSummary, Location, DisplayableSpeciesDetails, SimilarSpeciesSuggestion, SpeciesIdentificationResult } from './types';
 
-export let mockUser: UserSummary = { // Changed to let for potential future modification, though not strictly needed for current change
+export let mockUser: UserSummary = {
   id: 'user123',
   username: 'NatureExplorer',
-  name: 'Nature Explorer',
-  avatarUrl: 'https://placehold.co/150x150.png',
-  bio: 'Exploring the wild, one snapshot at a time. 🌿📸 Passionate about biodiversity and conservation. All observations are my own.',
-  website: 'https://example.com/nature_explorer_portfolio',
+  name: '', // Cleared
+  avatarUrl: 'https://placehold.co/150x150.png', // Kept avatar for visual
+  bio: '', // Cleared
+  website: undefined, // Cleared
 };
 
 const commonLocations: Location[] = [
@@ -35,7 +35,7 @@ const otherUser: UserSummary = {
 };
 
 
-export let mockObservations: Observation[] = [ // Changed to let so we can add to it
+export let mockObservations: Observation[] = [
   {
     id: 'obs1',
     user: mockUser,
@@ -58,7 +58,7 @@ export let mockObservations: Observation[] = [ // Changed to let so we can add t
     photoUrl: 'https://placehold.co/600x400.png?id=obs1',
     location: commonLocations[0],
     biome: 'Temperate Grassland',
-    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2).toISOString(), 
+    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2).toISOString(),
     notes: 'Spotted this beautiful Monarch during a hike.',
   },
   {
@@ -83,7 +83,7 @@ export let mockObservations: Observation[] = [ // Changed to let so we can add t
     photoUrl: 'https://placehold.co/600x400.png?id=obs2',
     location: commonLocations[1],
     biome: 'Temperate Deciduous Forest',
-    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24 * 5).toISOString(), 
+    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24 * 5).toISOString(),
     notes: 'Majestic old Oak tree in Central Park.',
   },
   {
@@ -108,7 +108,7 @@ export let mockObservations: Observation[] = [ // Changed to let so we can add t
     photoUrl: 'https://placehold.co/600x400.png?id=obs3',
     location: commonLocations[2],
     biome: 'Urban Woodland',
-    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24 * 10).toISOString(), 
+    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24 * 10).toISOString(),
     notes: 'A fleeting glimpse of a Red Fox in a London park.',
   },
     {
@@ -133,7 +133,7 @@ export let mockObservations: Observation[] = [ // Changed to let so we can add t
     photoUrl: 'https://placehold.co/600x400.png?id=obs4',
     location: commonLocations[3],
     biome: 'Cultivated Field',
-    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24 * 1).toISOString(), 
+    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24 * 1).toISOString(),
     notes: 'Bright sunflowers in a field.',
   },
   {
@@ -158,7 +158,7 @@ export let mockObservations: Observation[] = [ // Changed to let so we can add t
     photoUrl: 'https://placehold.co/600x400.png?id=obs5',
     location: commonLocations[4],
     biome: 'Garden',
-    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 3).toISOString(), 
+    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 3).toISOString(),
     notes: 'A friendly robin visited my garden.',
   },
 ];
@@ -185,13 +185,13 @@ export const mockSimilarSpecies: SimilarSpeciesSuggestion[] = [
     name: 'Viceroy Butterfly',
     latinName: 'Limenitis archippus',
     description: 'The Viceroy is a Batesian mimic of the Monarch, meaning it looks similar to deter predators. It is slightly smaller and has an extra black line across its hindwings.',
-    image: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=' 
+    image: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='
   },
   {
     name: 'Queen Butterfly',
     latinName: 'Danaus gilippus',
     description: 'The Queen is closely related to the Monarch and shares similar habitats. It is typically more brownish-orange and has white spots on its forewings that are less prominent than the Monarch\'s.',
-    image: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=' 
+    image: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='
   }
 ];
 
@@ -202,7 +202,7 @@ export function getObservationById(id: string): Observation | undefined {
 export function getSpeciesByLatinName(latinName: string): DisplayableSpeciesDetails | undefined {
   const obs = mockObservations.find(o => o.identifiedSpeciesDetails?.identification.latinName === latinName);
   if (obs && obs.identifiedSpeciesDetails) return obs.identifiedSpeciesDetails;
-  if (latinName === mockSpeciesDetail.identification.latinName) return mockSpeciesDetail; 
+  if (latinName === mockSpeciesDetail.identification.latinName) return mockSpeciesDetail;
   return undefined;
 }
 

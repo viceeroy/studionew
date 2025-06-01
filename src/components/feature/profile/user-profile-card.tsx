@@ -1,8 +1,13 @@
+
+'use client';
+
+import Link from 'next/link';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import type { UserSummary } from '@/lib/types';
 import { Settings, Plus, Link as LinkIcon } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 interface UserProfileCardProps {
   user: UserSummary;
@@ -12,6 +17,15 @@ interface UserProfileCardProps {
 }
 
 export function UserProfileCard({ user, observationsCount, followersCount, followingCount }: UserProfileCardProps) {
+  const { toast } = useToast();
+
+  const handleEditProfileClick = () => {
+    toast({
+      title: "Coming Soon!",
+      description: "Profile editing functionality will be available in a future update.",
+    });
+  };
+
   return (
     <Card className="shadow-none border-none bg-transparent">
       <CardContent className="p-4 md:p-6">
@@ -23,10 +37,11 @@ export function UserProfileCard({ user, observationsCount, followersCount, follo
                   <AvatarImage src={user.avatarUrl} alt={user.username} data-ai-hint="profile avatar large" />
                   <AvatarFallback className="text-4xl">{user.username.substring(0, 2).toUpperCase()}</AvatarFallback>
                 </Avatar>
-                {/* Placeholder for "Note..." popover if needed in future */}
              </div>
-            <Button variant="outline" size="sm" className="w-full max-w-[100px] sm:w-auto text-xs">
-              <Plus className="mr-1 h-3 w-3" /> New
+            <Button variant="outline" size="sm" className="w-full max-w-[100px] sm:w-auto text-xs" asChild>
+              <Link href="/identify">
+                <Plus className="mr-1 h-3 w-3" /> New
+              </Link>
             </Button>
           </div>
 
@@ -35,7 +50,7 @@ export function UserProfileCard({ user, observationsCount, followersCount, follo
             <div className="flex flex-col sm:flex-row sm:items-center gap-4 justify-between">
               <h1 className="text-xl md:text-2xl font-light text-foreground">{user.username}</h1>
               <div className="flex gap-2 items-center">
-                <Button variant="secondary" size="sm" className="text-xs px-3 py-1 h-auto">Edit Profile</Button>
+                <Button variant="secondary" size="sm" className="text-xs px-3 py-1 h-auto" onClick={handleEditProfileClick}>Edit Profile</Button>
                 <Button variant="secondary" size="sm" className="text-xs px-3 py-1 h-auto">View Archive</Button>
                 <Button variant="ghost" size="icon" className="h-7 w-7">
                   <Settings className="h-5 w-5 text-foreground" />
@@ -50,7 +65,7 @@ export function UserProfileCard({ user, observationsCount, followersCount, follo
             </div>
 
             <div className="text-sm">
-              <p className="font-semibold text-foreground">{user.name}</p>
+              {user.name && <p className="font-semibold text-foreground">{user.name}</p>}
               {user.bio && <p className="text-muted-foreground whitespace-pre-line">{user.bio}</p>}
               {user.website && (
                 <a
