@@ -6,8 +6,8 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import type { UserSummary } from '@/lib/types';
-import { Settings, Plus, Link as LinkIcon } from 'lucide-react';
-// import { useToast } from '@/hooks/use-toast'; // No longer needed for edit button
+import { Settings, Plus, Link as LinkIcon, LogOut } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 interface UserProfileCardProps {
   user: UserSummary;
@@ -17,14 +17,14 @@ interface UserProfileCardProps {
 }
 
 export function UserProfileCard({ user, observationsCount, followersCount, followingCount }: UserProfileCardProps) {
-  // const { toast } = useToast(); // No longer needed for edit button
+  const { toast } = useToast();
 
-  // const handleEditProfileClick = () => {
-  //   toast({
-  //     title: "Coming Soon!",
-  //     description: "Profile editing functionality will be available in a future update.",
-  //   });
-  // };
+  const handleLogoutClick = () => {
+    toast({
+      title: "Log Out",
+      description: "Log out functionality would be implemented here.",
+    });
+  };
 
   return (
     <Card className="shadow-none border-none bg-transparent">
@@ -49,13 +49,17 @@ export function UserProfileCard({ user, observationsCount, followersCount, follo
           <div className="flex-1 space-y-4 mt-2 sm:mt-0">
             <div className="flex flex-col sm:flex-row sm:items-center gap-4 justify-between">
               <h1 className="text-xl md:text-2xl font-light text-foreground">{user.username}</h1>
-              <div className="flex gap-2 items-center">
+              <div className="flex flex-wrap gap-2 items-center">
                 <Button variant="secondary" size="sm" className="text-xs px-3 py-1 h-auto" asChild>
                   <Link href="/profile/edit">Edit Profile</Link>
                 </Button>
                 <Button variant="secondary" size="sm" className="text-xs px-3 py-1 h-auto">View Archive</Button>
+                 <Button variant="outline" size="sm" className="text-xs px-3 py-1 h-auto" onClick={handleLogoutClick}>
+                  <LogOut className="mr-1 h-3 w-3" /> Log Out
+                </Button>
                 <Button variant="ghost" size="icon" className="h-7 w-7">
                   <Settings className="h-5 w-5 text-foreground" />
+                  <span className="sr-only">Settings</span>
                 </Button>
               </div>
             </div>
