@@ -1,3 +1,4 @@
+
 import Image from 'next/image';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -30,6 +31,8 @@ export function SpeciesDetailView({ species, similarSpeciesSuggestions, original
   
   const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
   const shareText = `Learn about the ${identification.commonName} on Semurg:`;
+  const photoForSharing = originalPhotoUrl || `https://placehold.co/600x400.png`;
+
 
   return (
     <div className="max-w-4xl mx-auto space-y-8">
@@ -38,7 +41,7 @@ export function SpeciesDetailView({ species, similarSpeciesSuggestions, original
           {/* Use placeholder if no original photo. In real app, fetch a representative image. */}
           <div className="relative w-full h-64 md:h-80 bg-muted">
              <Image
-                src={originalPhotoUrl || `https://placehold.co/800x400.png`}
+                src={photoForSharing}
                 alt={identification.commonName}
                 layout="fill"
                 objectFit="cover"
@@ -130,7 +133,12 @@ export function SpeciesDetailView({ species, similarSpeciesSuggestions, original
 
         </CardContent>
         <CardFooter className="p-6 bg-muted/10 flex flex-col sm:flex-row justify-between items-center gap-4 border-t">
-          <ShareButtons url={shareUrl} title={shareText} />
+          <ShareButtons 
+            url={shareUrl} 
+            title={shareText} 
+            speciesData={species} 
+            originalPhotoUrl={photoForSharing}
+          />
           <Link href="/identify" passHref>
             <Button variant="outline">
               <Trees className="mr-2 h-4 w-4" /> Identify Another
@@ -141,3 +149,5 @@ export function SpeciesDetailView({ species, similarSpeciesSuggestions, original
     </div>
   );
 }
+
+    

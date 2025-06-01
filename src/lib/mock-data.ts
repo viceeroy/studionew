@@ -1,6 +1,7 @@
-import type { Observation, UserSummary, SpeciesSummary, Location, DisplayableSpeciesDetails, SimilarSpeciesSuggestion } from './types';
 
-export const mockUser: UserSummary = {
+import type { Observation, UserSummary, SpeciesSummary, Location, DisplayableSpeciesDetails, SimilarSpeciesSuggestion, SpeciesIdentificationResult } from './types';
+
+export let mockUser: UserSummary = { // Changed to let for potential future modification, though not strictly needed for current change
   id: 'user123',
   username: 'NatureExplorer',
   name: 'Nature Explorer',
@@ -34,7 +35,7 @@ const otherUser: UserSummary = {
 };
 
 
-export const mockObservations: Observation[] = [
+export let mockObservations: Observation[] = [ // Changed to let so we can add to it
   {
     id: 'obs1',
     user: mockUser,
@@ -204,3 +205,32 @@ export function getSpeciesByLatinName(latinName: string): DisplayableSpeciesDeta
   if (latinName === mockSpeciesDetail.identification.latinName) return mockSpeciesDetail; 
   return undefined;
 }
+
+// Function to add a new observation to the mock data
+export function addObservation(data: {
+  identifiedSpeciesDetails: SpeciesIdentificationResult;
+  photoUrl: string;
+  notes?: string;
+  location?: Location;
+  biome?: string;
+}): void {
+  const newId = `obs${mockObservations.length + 1}_${Date.now()}`;
+  const newObservation: Observation = {
+    id: newId,
+    user: mockUser, // Using the default mockUser for new posts
+    species: {
+      commonName: data.identifiedSpeciesDetails.identification.commonName,
+      latinName: data.identifiedSpeciesDetails.identification.latinName,
+      // photoUrl for species summary could be the same as observation photoUrl or a generic one
+    },
+    identifiedSpeciesDetails: data.identifiedSpeciesDetails,
+    photoUrl: data.photoUrl,
+    location: data.location || commonLocations[Math.floor(Math.random() * commonLocations.length)], // Default to a random location if not provided
+    biome: data.biome || 'Mixed Habitat', // Default biome
+    timestamp: new Date().toISOString(),
+    notes: data.notes || `Observation of ${data.identifiedSpeciesDetails.identification.commonName}.`,
+  };
+  mockObservations.unshift(newObservation); // Add to the beginning of the array
+}
+
+    

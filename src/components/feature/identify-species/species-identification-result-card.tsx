@@ -1,3 +1,4 @@
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -88,7 +89,12 @@ export function SpeciesIdentificationResultCard({ result, originalPhotoUrl }: Sp
 
       </CardContent>
       <CardFooter className="p-6 bg-muted/30 flex flex-col sm:flex-row justify-between items-center gap-4">
-        <ShareButtons url={shareUrl} title={shareText} />
+        <ShareButtons 
+            url={shareUrl} 
+            title={shareText} 
+            speciesData={result} 
+            originalPhotoUrl={originalPhotoUrl} 
+        />
         <Button asChild>
             <a href={googleSearchUrl} target="_blank" rel="noopener noreferrer">
                 Search Online <Search className="ml-2 h-4 w-4" />
@@ -98,3 +104,5 @@ export function SpeciesIdentificationResultCard({ result, originalPhotoUrl }: Sp
     </Card>
   );
 }
+
+    
