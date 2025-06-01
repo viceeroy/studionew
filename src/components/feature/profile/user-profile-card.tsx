@@ -8,6 +8,9 @@ import { Button } from '@/components/ui/button';
 import type { UserSummary } from '@/lib/types';
 import { Plus, Link as LinkIcon, LogOut, Pencil } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { auth } from '@/lib/firebase'; // Import Firebase auth instance
+import { signOut } from 'firebase/auth'; // Import signOut function
+import { useRouter } from 'next/navigation'; // Import useRouter
 
 interface UserProfileCardProps {
   user: UserSummary;
@@ -18,12 +21,24 @@ interface UserProfileCardProps {
 
 export function UserProfileCard({ user, observationsCount, followersCount, followingCount }: UserProfileCardProps) {
   const { toast } = useToast();
+  const router = useRouter(); // Initialize router
 
-  const handleLogoutClick = () => {
-    toast({
-      title: "Log Out",
-      description: "Log out functionality would be implemented here.",
-    });
+  const handleLogoutClick = async () => {
+    try {
+      await signOut(auth);
+      toast({
+        title: "Logged Out",
+        description: "You have been successfully logged out.",
+      });
+      router.push('/auth'); // Redirect to auth page
+    } catch (error) {
+      console.error("Logout Error:", error);
+      toast({
+        title: "Logout Failed",
+        description: "Could not log you out. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -58,7 +73,6 @@ export function UserProfileCard({ user, observationsCount, followersCount, follo
                  <Button variant="outline" size="sm" className="text-sm px-4 py-1.5 h-auto" onClick={handleLogoutClick}>
                   <LogOut className="mr-2 h-4 w-4" /> Log Out
                 </Button>
-                {/* Removed Settings icon button */}
               </div>
             </div>
 
