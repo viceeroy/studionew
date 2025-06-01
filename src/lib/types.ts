@@ -5,16 +5,16 @@ export type SpeciesIdentificationResult = IdentifySpeciesOutput;
 export interface SpeciesSummary {
   commonName: string;
   latinName: string;
-  photoUrl?: string; // Optional, could be a generic icon or specific image
+  photoUrl?: string; 
 }
 
 export interface UserSummary {
   id: string;
-  username: string; // For the handle like 'viseeroy'
-  name: string; // For the display name shown in the bio area
+  username: string; 
+  name: string; 
   avatarUrl?: string;
   bio?: string;
-  website?: string; // For links like t.me/viseeroy
+  website?: string; 
 }
 
 export interface Location {
@@ -25,33 +25,33 @@ export interface Location {
 
 export interface Observation {
   id: string;
-  user: UserSummary; // Use the updated UserSummary
-  species?: SpeciesSummary; // Species might not be identified yet or could be a general observation
-  identifiedSpeciesDetails?: SpeciesIdentificationResult; // Full details if identified
-  photoUrl: string; // URL of the observation photo
-  photoDataUri?: string; // Data URI if available locally, for AI processing
+  user: UserSummary; 
+  species?: SpeciesSummary; 
+  identifiedSpeciesDetails?: SpeciesIdentificationResult; 
+  photoUrl: string; 
+  photoDataUri?: string; 
   location?: Location;
   biome?: string;
-  timestamp: string; // ISO string date
+  timestamp: string; 
   notes?: string;
 }
 
-export interface MapObservation {
-  id: string;
-  lat: number;
-  lng: number;
-  title: string; // e.g. species common name
-  photoUrl: string;
-}
+// Removed MapObservation type as it's no longer needed
+// export interface MapObservation {
+//   id: string;
+//   lat: number;
+//   lng: number;
+//   title: string; 
+//   photoUrl: string;
+// }
 
 export interface SimilarSpeciesSuggestion {
   name: string;
   latinName: string;
   description: string;
-  image: string; // data URI
+  image: string; 
 }
 
-// Extending IdentifySpeciesOutput from the AI flow to be more UI friendly if needed
 export interface DisplayableSpeciesDetails extends IdentifySpeciesOutput {
   // any additional UI-specific fields can go here
 }

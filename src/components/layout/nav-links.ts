@@ -1,5 +1,5 @@
 import type { LucideIcon } from 'lucide-react';
-import { Compass, Camera, Map, User, Sparkles } from 'lucide-react';
+import { Compass, Camera, User, Sparkles } from 'lucide-react'; // Removed Map icon
 
 export interface NavLink {
   href: string;
@@ -21,12 +21,12 @@ export const navLinks: NavLink[] = [
     icon: Sparkles, // Using Sparkles for AI aspect
     tooltip: 'Identify Species with AI',
   },
-  {
-    href: '/map',
-    label: 'Interactive Map',
-    icon: Map,
-    tooltip: 'Explore Observations Map',
-  },
+  // { // Removed Map link
+  //   href: '/map',
+  //   label: 'Interactive Map',
+  //   icon: Map,
+  //   tooltip: 'Explore Observations Map',
+  // },
   {
     href: '/profile',
     label: 'My Profile',
