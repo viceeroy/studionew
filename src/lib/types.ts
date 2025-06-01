@@ -10,8 +10,11 @@ export interface SpeciesSummary {
 
 export interface UserSummary {
   id: string;
-  name: string;
+  username: string; // For the handle like 'viseeroy'
+  name: string; // For the display name shown in the bio area
   avatarUrl?: string;
+  bio?: string;
+  website?: string; // For links like t.me/viseeroy
 }
 
 export interface Location {
@@ -22,7 +25,7 @@ export interface Location {
 
 export interface Observation {
   id: string;
-  user: UserSummary;
+  user: UserSummary; // Use the updated UserSummary
   species?: SpeciesSummary; // Species might not be identified yet or could be a general observation
   identifiedSpeciesDetails?: SpeciesIdentificationResult; // Full details if identified
   photoUrl: string; // URL of the observation photo

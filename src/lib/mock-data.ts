@@ -2,8 +2,11 @@ import type { Observation, UserSummary, SpeciesSummary, Location, MapObservation
 
 export const mockUser: UserSummary = {
   id: 'user123',
+  username: 'NatureExplorer',
   name: 'Nature Explorer',
-  avatarUrl: 'https://placehold.co/100x100.png',
+  avatarUrl: 'https://placehold.co/150x150.png',
+  bio: 'Exploring the wild, one snapshot at a time. 🌿📸 Passionate about biodiversity and conservation. All observations are my own.',
+  website: 'https://example.com/nature_explorer_portfolio',
 };
 
 const commonLocations: Location[] = [
@@ -21,6 +24,16 @@ const sampleSpecies: SpeciesSummary[] = [
   { commonName: 'Sunflower', latinName: 'Helianthus annuus', photoUrl: 'https://placehold.co/300x200.png?a=4' },
   { commonName: 'European Robin', latinName: 'Erithacus rubecula', photoUrl: 'https://placehold.co/300x200.png?a=5' },
 ];
+
+// Updated user for obs2 to have a different username for diversity
+const otherUser: UserSummary = {
+  id: 'user456',
+  username: 'WildernessWanderer',
+  name: 'Wilderness Wanderer',
+  avatarUrl: 'https://placehold.co/100x100.png?u=2',
+  bio: 'Seeking adventures in untouched landscapes.',
+};
+
 
 export const mockObservations: Observation[] = [
   {
@@ -48,7 +61,7 @@ export const mockObservations: Observation[] = [
   },
   {
     id: 'obs2',
-    user: { id: 'user456', name: 'Wilderness Wanderer', avatarUrl: 'https://placehold.co/100x100.png?u=2' },
+    user: otherUser,
     species: sampleSpecies[1],
     identifiedSpeciesDetails: {
       identification: {
@@ -94,7 +107,7 @@ export const mockObservations: Observation[] = [
   },
     {
     id: 'obs4',
-    user: { id: 'user789', name: 'Botanist Ben', avatarUrl: 'https://placehold.co/100x100.png?u=3' },
+    user: { id: 'user789', username: 'BotanistBen', name: 'Botanist Ben', avatarUrl: 'https://placehold.co/100x100.png?u=3' },
     species: sampleSpecies[3],
     photoUrl: 'https://placehold.co/600x400.png?id=obs4',
     location: commonLocations[3],
