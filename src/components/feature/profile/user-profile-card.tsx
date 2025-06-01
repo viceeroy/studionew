@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import type { UserSummary } from '@/lib/types';
-import { Settings, Plus, Link as LinkIcon, LogOut } from 'lucide-react';
+import { Plus, Link as LinkIcon, LogOut, Pencil } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface UserProfileCardProps {
@@ -50,17 +50,15 @@ export function UserProfileCard({ user, observationsCount, followersCount, follo
             <div className="flex flex-col sm:flex-row sm:items-center gap-4 justify-between">
               <h1 className="text-xl md:text-2xl font-light text-foreground">{user.username}</h1>
               <div className="flex flex-wrap gap-2 items-center">
-                <Button variant="secondary" size="sm" className="text-xs px-3 py-1 h-auto" asChild>
-                  <Link href="/profile/edit">Edit Profile</Link>
+                <Button variant="secondary" size="sm" className="text-sm px-4 py-1.5 h-auto" asChild>
+                  <Link href="/profile/edit">
+                    <Pencil className="mr-2 h-4 w-4" /> Edit Profile
+                  </Link>
                 </Button>
-                <Button variant="secondary" size="sm" className="text-xs px-3 py-1 h-auto">View Archive</Button>
-                 <Button variant="outline" size="sm" className="text-xs px-3 py-1 h-auto" onClick={handleLogoutClick}>
-                  <LogOut className="mr-1 h-3 w-3" /> Log Out
+                 <Button variant="outline" size="sm" className="text-sm px-4 py-1.5 h-auto" onClick={handleLogoutClick}>
+                  <LogOut className="mr-2 h-4 w-4" /> Log Out
                 </Button>
-                <Button variant="ghost" size="icon" className="h-7 w-7">
-                  <Settings className="h-5 w-5 text-foreground" />
-                  <span className="sr-only">Settings</span>
-                </Button>
+                {/* Removed Settings icon button */}
               </div>
             </div>
 
