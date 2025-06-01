@@ -29,12 +29,13 @@ export function Header() {
   
   if (!mounted) {
     return (
-      <header className="sticky top-0 z-40 flex h-16 items-center justify-between border-b bg-background/80 px-4 backdrop-blur-md md:px-6">
+      <header className="sticky top-0 z-40 flex h-16 items-center justify-between border-b px-4 md:px-6">
+        {/* Placeholder for left content (e.g. mobile logo handled by AppShell) */}
         <div className="flex items-center gap-2">
-          <Logo size="md" />
+           {/* Mobile logo is handled by AppShell, this can be empty on desktop */}
         </div>
         <div className="flex items-center gap-4">
-          <div className="hidden md:flex h-8 w-20 rounded-md bg-muted animate-pulse" /> {/* Placeholder for nav links */}
+          <div className="hidden md:flex h-10 w-48 rounded-md bg-muted animate-pulse" /> {/* Placeholder for nav links */}
           <div className="h-8 w-8 rounded-full bg-muted animate-pulse" /> {/* Placeholder for theme button */}
         </div>
       </header>
@@ -42,33 +43,34 @@ export function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-40 flex h-16 items-center justify-between border-b bg-background/80 px-4 backdrop-blur-md md:px-6">
-      <div className="flex items-center gap-2">
-        {/* Logo is part of AppShell's SidebarHeader for desktop, this one is more for mobile or when sidebar is hidden/gone */}
-        {/* <Logo size="md" />  Let's rely on the one in Sidebar for consistency if Sidebar is kept */}
+    <header className="sticky top-0 z-40 flex h-16 items-center justify-between border-b border-border px-4 md:px-6">
+      {/* Left side: This div helps push the right content group.
+          Mobile logo is handled by AppShell's separate fixed div.
+      */}
+      <div className="flex items-center">
+        {/* Intentionally sparse on desktop to allow right-alignment of nav */}
       </div>
 
-      {/* Desktop Navigation Links - Centered */}
-      <nav className="hidden md:flex flex-1 items-center justify-center gap-4 lg:gap-6">
-        {navLinks.map((link: NavLink) => {
-          const isActive = pathname === link.href || (link.href !== '/discover' && pathname.startsWith(link.href));
-          return (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={cn(
-                "text-sm font-medium transition-colors hover:text-primary",
-                isActive ? "text-primary" : "text-muted-foreground"
-              )}
-            >
-              {link.label}
-            </Link>
-          );
-        })}
-      </nav>
-
-      {/* Theme Toggle Button */}
-      <div className="flex items-center">
+      {/* Right side: Desktop Navigation Links & Theme Toggle */}
+      <div className="hidden md:flex items-center gap-x-2 lg:gap-x-4">
+        <nav className="flex items-center gap-x-1 lg:gap-x-2">
+          {navLinks.map((link: NavLink) => {
+            const isActive = pathname === link.href || (link.href !== '/discover' && pathname.startsWith(link.href));
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={cn(
+                  "flex items-center gap-x-2 rounded-md px-3 py-2 text-base font-medium transition-colors hover:bg-accent/80 hover:text-accent-foreground",
+                  isActive ? "bg-accent text-accent-foreground" : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                <link.icon className={cn("h-5 w-5", isActive ? "text-accent-foreground" : "")} />
+                <span>{link.label}</span>
+              </Link>
+            );
+          })}
+        </nav>
         <Button variant="ghost" size="icon" onClick={toggleTheme} aria-label="Toggle theme">
           {isDarkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
         </Button>
