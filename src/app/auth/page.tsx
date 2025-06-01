@@ -1,3 +1,4 @@
+'use client';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -5,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Leaf } from "lucide-react";
 import Link from "next/link";
+import type React from "react"; // Import React for FormEvent type
 
 export default function AuthPage() {
   // Placeholder for actual Firebase login/signup logic
