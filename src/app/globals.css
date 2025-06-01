@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -57,50 +58,50 @@ body {
   }
 
   .dark {
-    --background: 30 10% 15%; /* Very Dark Brown */
-    --foreground: 60 50% 80%; /* Off-white/Light Beige text */
+    --background: 30 10% 22%; /* Was 15%, now lighter dark brown */
+    --foreground: 60 50% 85%; /* Was 80%, slightly brighter off-white */
 
-    --card: 30 10% 20%; /* Slightly Lighter Dark Brown */
-    --card-foreground: 60 50% 80%;
+    --card: 30 10% 25%; /* Was 20%, lighter card background */
+    --card-foreground: 60 50% 85%; /* Consistent with main foreground */
 
-    --popover: 30 10% 22%; /* Slightly Lighter Dark Brown for popovers */
-    --popover-foreground: 60 50% 80%;
+    --popover: 30 10% 27%; /* Was 22%, lighter popover background */
+    --popover-foreground: 60 50% 85%; /* Consistent with main foreground */
 
-    --primary: 120 39% 55%; /* Slightly Lighter Forest Green */
-    --primary-foreground: 120 100% 10%; /* Very Dark Green/Black */
+    --primary: 120 39% 55%; /* Kept existing primary green brightness */
+    --primary-foreground: 120 60% 95%; /* Was 10%, now very light for contrast */
 
-    --secondary: 120 20% 25%; /* Dark Muted Green */
-    --secondary-foreground: 120 40% 70%; /* Light Green Text */
+    --secondary: 120 20% 30%; /* Was 25%, slightly lighter muted green */
+    --secondary-foreground: 120 40% 75%; /* Was 70%, adjusted for new secondary */
 
-    --muted: 30 10% 22%; /* Darker Muted Brown */
-    --muted-foreground: 30 20% 60%; /* Muted Grey/Brown Text */
+    --muted: 30 10% 28%; /* Was 22%, lighter muted brown */
+    --muted-foreground: 30 20% 65%; /* Was 60%, lighter muted text */
 
-    --accent: 25 57% 45%; /* Slightly Lighter Earthy Brown */
-    --accent-foreground: 25 100% 10%; /* Very Dark Brown/Black */
+    --accent: 25 57% 50%; /* Was 45%, slightly brighter earthy brown */
+    --accent-foreground: 25 60% 95%; /* Was 10%, now very light for contrast */
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 45%; /* Was 30.6%, brighter red for better visibility */
+    --destructive-foreground: 0 0% 98%; /* Kept for high contrast */
 
-    --border: 30 10% 30%; /* Dark Brown Border */
-    --input: 30 10% 25%; /* Dark Brown Input Background */
-    --ring: 120 39% 55%; /* Primary for Focus Rings */
+    --border: 30 10% 35%; /* Was 30%, slightly lighter border */
+    --input: 30 10% 32%; /* Was 25%, lighter input background */
+    --ring: 120 39% 55%; /* Kept existing ring color */
 
-    /* Chart colors for dark theme */
-    --chart-1: 120 39% 55%; /* Primary Dark */
-    --chart-2: 25 57% 45%;  /* Accent Dark */
-    --chart-3: 120 30% 65%; /* Lighter Primary Dark */
-    --chart-4: 25 40% 55%;  /* Lighter Accent Dark */
-    --chart-5: 60 30% 60%;  /* Neutral Dark tone */
+    /* Chart colors for dark theme - adjusted to match new primary/accent potentially */
+    --chart-1: 120 39% 55%; 
+    --chart-2: 25 57% 50%;  
+    --chart-3: 120 30% 65%; 
+    --chart-4: 25 40% 55%;  
+    --chart-5: 60 30% 60%;  
 
     /* Sidebar specific theme variables for dark mode */
-    --sidebar-background: 30 10% 18%;
-    --sidebar-foreground: 60 50% 80%;
-    --sidebar-primary: 120 39% 55%;
-    --sidebar-primary-foreground: 120 100% 10%;
-    --sidebar-accent: 25 57% 45%;
-    --sidebar-accent-foreground: 25 100% 10%;
-    --sidebar-border: 30 10% 25%;
-    --sidebar-ring: 120 39% 55%;
+    --sidebar-background: 30 10% 24%; /* Was 18%, lighter sidebar */
+    --sidebar-foreground: 60 50% 85%; /* Consistent with main foreground */
+    --sidebar-primary: 120 39% 55%; /* Consistent with main primary */
+    --sidebar-primary-foreground: 120 60% 95%; /* Consistent with main primary-foreground */
+    --sidebar-accent: 25 57% 50%; /* Consistent with main accent */
+    --sidebar-accent-foreground: 25 60% 95%; /* Consistent with main accent-foreground */
+    --sidebar-border: 30 10% 32%; /* Lighter sidebar border */
+    --sidebar-ring: 120 39% 55%; /* Consistent with main ring */
   }
 }
 
