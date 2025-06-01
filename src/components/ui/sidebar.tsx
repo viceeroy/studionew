@@ -1,3 +1,25 @@
+/**
+ * @fileOverview Sidebar component.
+ *
+ * This file exports the `Sidebar` component and its related sub-components,
+ * which are used to create a responsive sidebar for navigation.
+ *
+ * It also includes the `useSidebar` hook to access the sidebar state and
+ * the `SidebarProvider` to wrap the application with the sidebar context.
+ *
+ * @requires react
+ * @requires @radix-ui/react-slot
+ * @requires class-variance-authority
+ * @requires lucide-react
+ * @requires @/hooks/use-mobile
+ * @requires @/lib/utils
+ * @requires @/components/ui/button
+ * @requires @/components/ui/input
+ * @requires @/components/ui/separator
+ * @requires @/components/ui/sheet
+ * @requires @/components/ui/skeleton
+ * @requires @/components/ui/tooltip
+ */
 "use client"
 
 import * as React from "react"
@@ -10,7 +32,7 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
-import { Sheet, SheetContent } from "@/components/ui/sheet"
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet"
 import { Skeleton } from "@/components/ui/skeleton"
 import {
   Tooltip,
@@ -206,6 +228,9 @@ const Sidebar = React.forwardRef<
             }
             side={side}
           >
+            <SheetHeader className="sr-only">
+              <SheetTitle>Navigation Menu</SheetTitle>
+            </SheetHeader>
             <div className="flex h-full w-full flex-col">{children}</div>
           </SheetContent>
         </Sheet>
